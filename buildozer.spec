@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = MyApp
+title = Calculator
 
 # (str) Package name
-package.name = myapp
+package.name = calculator
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.myapp
+package.domain = org.calculator
 
 # (str) Source code where the main.py live
 source.dir = .
