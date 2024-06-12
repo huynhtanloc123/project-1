@@ -29,7 +29,7 @@ jobs:
           key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
 
       - name: Install dependencies
-        run: |
+           run: |
               sudo apt-get update
               sudo apt-get install -y build-essential git python3-pip openjdk-8-jdk unzip
               pip install --upgrade pip
@@ -41,7 +41,7 @@ jobs:
           buildozer_version: stable
 
       - name: Install Android SDK and NDK
-        run: |
+            run: |
               wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
               mkdir -p $HOME/android-sdk
               unzip -q sdk-tools-linux-4333796.zip -d $HOME/android-sdk
