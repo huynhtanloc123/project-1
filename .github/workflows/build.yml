@@ -49,7 +49,16 @@ jobs:
         echo "ANDROIDSDK=$HOME/android-sdk" >> $GITHUB_ENV
         echo "ANDROIDNDK=$HOME/android-ndk/android-ndk-r21e" >> $GITHUB_ENV
         echo "$HOME/android-sdk/platform-tools" >> $GITHUB_PATH
+      shell: bash
+
+    - name: Debug environment variables
+      run: |
+        echo "ANDROIDSDK=$ANDROIDSDK"
+        echo "ANDROIDNDK=$ANDROIDNDK"
+        echo "PATH=$PATH"
+      shell: bash
 
     - name: Build with Buildozer
       run: |
         buildozer android debug
+      shell: bash
