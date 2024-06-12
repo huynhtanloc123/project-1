@@ -16,18 +16,24 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Python 3.7.6
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.7.6'
+    - name: Manually install Python 3.7.6
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential wget
+        wget https://www.python.org/ftp/python/3.7.6/Python-3.7.6.tgz
+        tar -xzf Python-3.7.6.tgz
+        cd Python-3.7.6
+        ./configure
+        make
+        sudo make install
+        python3.7 --version  # Verify installation
 
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential git python3-pip openjdk-8-jdk unzip
-        pip install --upgrade pip
-        pip install cython==0.29.21
-        pip install buildozer
+        sudo apt-get install -y git python3-pip openjdk-8-jdk unzip
+        pip3 install --upgrade pip
+        pip3 install cython==0.29.21
+        pip3 install buildozer
 
     - name: Install Android SDK and NDK
       run: |
