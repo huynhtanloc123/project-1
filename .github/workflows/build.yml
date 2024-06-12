@@ -1,25 +1,26 @@
-name: CI
+name: Build with Buildozer
 on:
   push:
     branches: [ main ]
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
       # used to cache dependencies with a timeout
-      - name: Get Date
+      - name: Checkout code
         id: get-date
         run: |
           echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
         shell: bash
 
-      - name: Cache Buildozer global directory
-        uses: actions/cache@v2
+      - name: Set up Python 3.7.6
+        uses: actions/setup-python@v2
         with:
+        python-version: '3.7.6'
           path: .buildozer_global
           key: buildozer-global-${{ hashFiles('buildozer.spec') }} # Replace with your path
 
@@ -28,15 +29,17 @@ jobs:
           path: .buildozer
           key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
 
-      - name: Build with Buildozer
+      - name: Install dependencies
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
         with:
           command: buildozer android debug
           buildozer_version: stable
 
-      - name: Upload artifacts
+      - name: Install Android SDK and NDK
         uses: actions/upload-artifact@v2
         with:
-          name: package
+          name: Set up environment variables
           path: ${{ steps.buildozer.outputs.filename }}
+          
+      - name: Build with Buildozer
