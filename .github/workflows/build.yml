@@ -1,6 +1,6 @@
 name: Build with Buildozer
 on:
-  push:
+ push:
     branches: [ main ]
 
 jobs:
@@ -29,26 +29,26 @@ jobs:
           key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
 
       - name: Install dependencies
-           run: |
+        run: |
               sudo apt-get update
               sudo apt-get install -y build-essential git python3-pip openjdk-8-jdk unzip
               pip install --upgrade pip
               pip install cython==0.29.21
               pip install buildozer
         id: buildozer
-        with:
+      
           command: buildozer android debug
           buildozer_version: stable
 
       - name: Install Android SDK and NDK
-            run: |
+        run: |
               wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
               mkdir -p $HOME/android-sdk
               unzip -q sdk-tools-linux-4333796.zip -d $HOME/android-sdk
               echo "y" | $HOME/android-sdk/tools/bin/sdkmanager --sdk_root=$HOME/android-sdk "platform-tools" "platforms;android-31" "build-tools;31.0.0"
               wget https://dl.google.com/android/repository/android-ndk-r21e-linux-x86_64.zip
               unzip -q android-ndk-r21e-linux-x86_64.zip -d $HOME/android-ndk
-        with:
+      
           name: Set up environment variables
           run: |
                 echo "ANDROIDSDK=$HOME/android-sdk" >> $GITHUB_ENV
