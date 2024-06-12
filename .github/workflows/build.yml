@@ -37,8 +37,8 @@ jobs:
               pip install buildozer
         id: buildozer
       
-          command: buildozer android debug
-          buildozer_version: stable
+        command: buildozer android debug
+        buildozer_version: stable
 
       - name: Install Android SDK and NDK
         run: |
@@ -49,13 +49,13 @@ jobs:
               wget https://dl.google.com/android/repository/android-ndk-r21e-linux-x86_64.zip
               unzip -q android-ndk-r21e-linux-x86_64.zip -d $HOME/android-ndk
       
-          name: Set up environment variables
-          run: |
+      - name: Set up environment variables
+        run: |
                 echo "ANDROIDSDK=$HOME/android-sdk" >> $GITHUB_ENV
                 echo "ANDROIDNDK=$HOME/android-ndk/android-ndk-r21e" >> $GITHUB_ENV
                 echo "$HOME/android-sdk/platform-tools" >> $GITHUB_PATH
-          path: ${{ steps.buildozer.outputs.filename }}
+    path: ${{ steps.buildozer.outputs.filename }}
           
-      - name: Build with Buildozer
+     - name: Build with Buildozer
         run: |
               buildozer android debug
